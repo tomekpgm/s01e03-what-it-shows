@@ -12,8 +12,12 @@ signature: megadev-student
   import Callout from '#lib/kb/Callout.svelte';
   import RenderStamp from '#lib/kb/RenderStamp.svelte';
 
-  // One ticket per problem. Filled in once each ticket exists.
-  const tickets = {};
+  // One ticket per problem.
+  const tickets = {
+    parser: 'https://github.com/tomekpgm/s01e03-what-it-shows/issues/1',
+    hint: 'https://github.com/tomekpgm/s01e03-what-it-shows/issues/2',
+    'one-day move': 'https://github.com/tomekpgm/s01e03-what-it-shows/issues/3',
+  };
 </script>
 
 [#4471](/kb/incidents/4471) was merged on subject lines ([decision 0001](/kb/decisions/0001-dedupe-by-subject))
