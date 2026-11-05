@@ -1,0 +1,67 @@
+---
+layout: runbook
+title: '#4471 · three problems, not one'
+owner: megadev-student
+status: proposed
+reviewed: 2026-11-05
+signature: megadev-student
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+
+  // One ticket per problem. Filled in once each ticket exists.
+  const tickets = {};
+</script>
+
+[#4471](/kb/incidents/4471) was merged on subject lines ([decision 0001](/kb/decisions/0001-dedupe-by-subject))
+and marked known: one issue, one fix queued. Read by tenant, channel and booking form, the way
+`causes.ts` already reads them, its reports are three different problems. Each needs its own ticket,
+and one fix will not close the others.
+
+<ProblemTable ticket={4471} {tickets} />
+
+<Callout kind="warn">
+Not one issue. A fix for the parser closes the parser problem only. The other two stay open until
+they have tickets and fixes of their own.
+</Callout>
+
+## `parser`: dates read month first
+
+The shared parser reads every date month first. Every tenant on file writes the day first, so a
+booking for 7 April comes out as 4 July. These reports come in through the app, by email and through
+booking-v2 forms, at every tenant.
+
+## `hint`: booking-v3 tells people to type month first
+
+booking-v3 prints `MM/DD/YYYY` under its date field. At a day-first tenant, people type what the hint
+tells them, month first, and the form then reads the date the tenant's way. These are only reports
+that came through the form at a booking-v3 tenant. Fixing the parser does not fix them: the hint and
+the way the form reads its own field have to agree.
+
+## `one-day move`: off by one day, not flipped
+
+The desk set these reports apart in its own notes (`desk-notes.json`): the date moves by one day, or
+lands on a different day for different people, instead of swapping day and month. Examples:
+R-41202 (Tuesday 12 May shown as Monday 11 May), R-41344 (one meeting, a different day for a client in
+Lisbon and one in Toronto), R-41236 (the invite arrived before the booking was made). The cause is not
+known yet. Until it is, these reports are a problem of their own, not a footnote under `parser`.
+
+## Intake tags
+
+`meta.intakeTag` is what intake guessed from the reporter's browser. The note under the table lists
+the tags intake has, counted from the data; none of them is `one-day move`. The column "intake tagged as" in the table
+shows what intake tagged each problem's reports as. In the `parser` and `hint` rows, the other tag is
+a wrong guess. In the `one-day move` row, the tag is not a mismatch: intake had no tag to give. Triage
+by tenant, channel and form, not by the tag.
+
+## What changes
+
+- Each problem gets its own ticket, linked in the table above.
+- #4471 should not be closed by the parser fix alone.
+- Merging on subject alone put these problems into one ticket. Decision 0001 stays as it is; a new
+  decision record should replace it.
+
+<RenderStamp {signature} />
