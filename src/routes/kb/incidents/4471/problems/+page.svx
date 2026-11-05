@@ -4,7 +4,7 @@ title: '#4471 · three problems, not one'
 owner: megadev-student
 status: proposed
 reviewed: 2026-11-05
-signature: megadev-student
+signature: v1.eyJzdWIiOiIxMjA4MiIsImF1ZCI6ImNoYWxsZW5nZTp3aGF0LWl0LXNob3dzIiwiaWF0IjoxNzkzOTE1MTU1LCJleHAiOjE3OTQwMDE1NTV9.I5muJl_1qeqMqwpBc3_jTd4Lwa6znfGW-BP-A74KXTs
 ---
 
 <script>
